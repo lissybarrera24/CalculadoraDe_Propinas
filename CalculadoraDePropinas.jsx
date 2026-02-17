@@ -1,0 +1,86 @@
+import { useState} from "react";
+import Alerta from "/Alerta";
+
+fuction CalculadoraDePropinas() {
+    const [monto, setMonto] = useState("");
+    const [porcentaje, setPorcentaje] = useState(15);
+    const [propina, setPropina] = useState(null);
+    const [total, setTotal] = useState(null);
+    const [error, setError] = useState(null);
+
+    const calcular = () => {
+        setError("");
+        setPropina(null);
+        setTotal(null);
+
+        if (monto.trim() === "") {
+            setError(Debes ingresar el monto de la cuenta.);
+            return;
+        }
+
+        const montoNumerico =parseFloat(monto);
+
+        if (isNAN(montoNumerico) || montoNumerico <= 0) {
+            setError("El monto mayor debe ser un numero mayor que 0.");
+            return;
+        }
+
+        const valorPropina = montoNumerico * (porcentaje /100);
+        consttotalFinal = montoNumerico + valorPropina;
+
+        setPropina(valorPropina.toFixed(2));
+        setTotal(totalFinal.tofixed(2));
+    };
+
+    return(
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
+                <h1 className="text-2xl font-bold text-center mb-6">
+                    Calculadora De Propinas
+                    </h1>
+
+                    <label className="block m-2 font-semobold">
+                        Total de la cuenta
+                        </label>
+                        <input
+                        type= "text"
+                        value={monto}
+                        onChange={ (e) => setMonto(e.target.value)}
+                        className="w-full p-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Ej: 50.00"
+
+                        />
+                        <label className="block mb-2 font-semibold">
+                            Selecciona el porcentaje
+                            </label>
+                            <select
+                            value={porcentaje}
+                            onChange={ (e) => setPorcentaje(parseInt(e.target.value))}
+                            className="w-full p-2 border orunded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+
+                            >
+
+                            <option value={10}>10%</option>
+                            <option value={15}>15%</option>
+                            <option value={20}>20%</option>
+                            </select>
+
+                            <button 
+                            onClick={calcular}
+                            className="w-full bg-blue-500 text-white p-2 rounded-lg horver:bg-blue-600 transition"
+                            >
+                                Calcular
+                            </button>
+
+                            {error && <Alerta mensaje={error} />}
+
+                            {propina && total && (
+                                <div class name="mt-6 bg-green-100 p-4 rounded-lg text-center">
+                                    <p className="font-semibold">Total a pagar: ${total}</p>
+                                </div>
+                            )}
+                            </div>
+                            :/div>
+                            
+    )
+}
